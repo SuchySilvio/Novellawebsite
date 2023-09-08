@@ -176,6 +176,46 @@
   <!-- Add Firebase products that you want to use -->
   <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-firestore.js"></script>
-  <script src="./firebase.js" type="text/javascript"></script>
+  <script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAJyqzhW7Th0rMLtHDMGM1nLJGcKXvgwCs",
+      authDomain: "double-song-385922.firebaseapp.com",
+      projectId: "double-song-385922",
+      storageBucket: "double-song-385922.appspot.com",
+      messagingSenderId: "723750334093",
+      appId: "1:723750334093:web:db516c994f8c6ea87abcc4"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    document.getElementById("email-form").addEventListener("submit", function(e){
+      e.preventDefault();
+
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+
+      firebase.auth().signInWithEmailAndPassword(email, password)
+              .then((userCredential) => {
+                // Signed in successfully
+                window.location.href = "public/dashboard/analytics.html"; // Redirect to 404 page
+              })
+              .catch((error) => {
+                // Handle errors here
+                var errorCode = error.code;
+                var errorMessage = error.message;
+
+                if (errorCode === 'auth/wrong-password') {
+                  alert('Wrong password.');
+                } else if (errorCode === 'auth/user-not-found') {
+                  alert('No user found with this email address.');
+                } else {
+                  alert(errorMessage); // Display other errors
+                }
+              });
+    });
+
+  </script>
 </body>
 </html>
